@@ -1,7 +1,7 @@
 import { Button, Paper, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { getValidationSchema } from "./YupValidation";
+import { getValidationSchema } from "../../validations/YupValidation";
 import registerUser from "../../utils/registerUser";
 import { useAppDispatch } from "../../store/hooks";
 import { toggleModel, toggleSnack } from "../../store/slices/toggleSlice";
