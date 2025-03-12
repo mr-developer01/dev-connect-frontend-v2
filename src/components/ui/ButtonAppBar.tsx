@@ -3,10 +3,11 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useAppDispatch } from "../../store/hooks";
+import { toggleModel } from "../../store/slices/toggleSlice";
 
-type TButtonAppBar = { setOpen: (arg: boolean) => void };
-
-export default function ButtonAppBar({ setOpen }: TButtonAppBar) {
+export default function ButtonAppBar() {
+  const dispatch = useAppDispatch()
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -14,7 +15,7 @@ export default function ButtonAppBar({ setOpen }: TButtonAppBar) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Commit.dev
           </Typography>
-          <Button color="inherit" onClick={() => setOpen(true)}>
+          <Button color="inherit" onClick={() => dispatch(toggleModel(true))}>
             Login
           </Button>
         </Toolbar>

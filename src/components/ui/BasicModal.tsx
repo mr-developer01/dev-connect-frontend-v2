@@ -2,6 +2,9 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import AuthForm from "../core/AuthForm";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { toggleModel } from "../../store/slices/toggleSlice";
+import CustomizedSnackbars from "./CustomizedSnackbars";
 
 const style = {
   position: "relative",
@@ -13,14 +16,16 @@ const style = {
   boxShadow: 24,
 };
 
-type TBasicModal = { open: boolean; setOpen: (arg: boolean) => void };
-
-export default function BasicModal({ open, setOpen }: TBasicModal) {
-  const handleClose = () => setOpen(false);
+export default function BasicModal() {
+  const dispatch = useAppDispatch();
+  const check = useAppSelector((state) => state.toggle.modal);
+  const handleClose = () => {
+    dispatch(toggleModel(false));
+  };
   return (
     <Box>
       <Modal
-        open={open}
+        open={check}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -33,8 +38,9 @@ export default function BasicModal({ open, setOpen }: TBasicModal) {
               top: "4%",
               cursor: "pointer",
             }}
-            onClick={() => setOpen(false)}
+            onClick={() => dispatch(toggleModel(false))}
           />
+          <CustomizedSnackbars />
           <AuthForm />
         </Box>
       </Modal>

@@ -1,19 +1,49 @@
 import { Button, Paper, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { validationSchema } from "./YupValidation";
 import { useState } from "react";
+import { getValidationSchema } from "./YupValidation";
+import registerUser from "../../hooks/authentication/useRegister";
+import { useAppDispatch } from "../../store/hooks";
+import { toggleModel } from "../../store/slices/toggleSlice";
 
 const AuthForm = () => {
   const [isLogin, setIslogin] = useState(true);
+  const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: {
       username: "",
       email: "",
       password: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: getValidationSchema(isLogin),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      if (values.username) {
+        registerUser({
+          name: values.username,
+          email: values.email,
+          password: values.password,
+        }).then((data) => {
+          console.log(data);
+          if (data.token) {
+            formik.resetForm();
+            dispatch(toggleModel(false));
+          }
+        });
+      }
+
+      if (!values.username) {
+        registerUser({
+          name: values.username,
+          email: values.email,
+          password: values.password,
+        }).then((data) => {
+          console.log(data);
+          if (data.token) {
+            formik.resetForm();
+            dispatch(toggleModel(false));
+          }
+        });
+      }
     },
   });
   return (
@@ -64,7 +94,12 @@ const AuthForm = () => {
           </Button>
           <Typography textAlign={"center"}>
             {isLogin ? "New to DEV Community ?" : "Already a Dev ?"}{" "}
-            <Button onClick={() => setIslogin((prev) => !prev)}>
+            <Button
+              onClick={() => {
+                setIslogin((prev) => !prev);
+                formik.resetForm();
+              }}
+            >
               {isLogin ? "SignUp" : "Signin"}
             </Button>
           </Typography>
