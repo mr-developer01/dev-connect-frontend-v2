@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import toggleReducer from "./slices/toggleSlice";
 import apiResponseReducer from "./slices/apiResponseSlice"
+import userReducer from "./slices/userSlice"
 // ...
 
 export const store = configureStore({
   reducer: {
     toggle: toggleReducer,
-    apiResponse: apiResponseReducer
+    apiResponse: apiResponseReducer,
+    user: userReducer
   },
 });
 

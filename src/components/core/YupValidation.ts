@@ -14,6 +14,12 @@ export const getValidationSchema = (isLogin: boolean) =>
       .required("Email is required"),
     password: yup
       .string()
-      .min(8, "Password should be of minimum 8 characters length")
+      .min(6, "Password should be of minimum 8 characters length")
+      .matches(/^[A-Z]/, "Password must start with an uppercase letter")
+      .matches(/[0-9]/, "Password must contain at least one number")
+      .matches(
+        /[@#%&*]/,
+        "Password must contain at least one special character (@, #, %, &, *)"
+      )
       .required("Password is required"),
   });

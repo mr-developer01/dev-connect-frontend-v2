@@ -29,6 +29,6 @@ export const { toggleModel, toggleSnack } = toggleSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectModal = (state: RootState) => state.toggle.modal;
-export const selectSnack = (state: RootState) => state.toggle.snack;
+export const selectSnack = (state: RootState) => state.toggle.snack;   
 
 export default toggleSlice.reducer;

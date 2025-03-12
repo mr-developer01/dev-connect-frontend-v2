@@ -2,11 +2,18 @@ import { Button, Paper, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { getValidationSchema } from "./YupValidation";
-import registerUser from "../../hooks/authentication/useRegister";
+import registerUser from "../../utils/registerUser";
 import { useAppDispatch } from "../../store/hooks";
-import { toggleModel } from "../../store/slices/toggleSlice";
+import { toggleModel, toggleSnack } from "../../store/slices/toggleSlice";
+import {
+  setErrorState,
+  setResMessage,
+} from "../../store/slices/apiResponseSlice";
+import { addUser } from "../../store/slices/userSlice";
+import { useCookies } from "react-cookie";
 
 const AuthForm = () => {
+  const [cookies, setCookie] = useCookies(["user"]);
   const [isLogin, setIslogin] = useState(true);
   const dispatch = useAppDispatch();
   const formik = useFormik({
@@ -25,8 +32,14 @@ const AuthForm = () => {
         }).then((data) => {
           console.log(data);
           if (data.token) {
-            formik.resetForm();
-            dispatch(toggleModel(false));
+            dispatch(toggleSnack(true));
+            dispatch(setResMessage(`${data.name} welcome to Dev Team`));
+            dispatch(addUser({name: data.name, email: data.email, _id: data._id}));
+            setCookie("user", data.token);
+            setTimeout(() => {
+              formik.resetForm();
+              dispatch(toggleModel(false));
+            }, 2000);
           }
         });
       }
@@ -37,10 +50,24 @@ const AuthForm = () => {
           email: values.email,
           password: values.password,
         }).then((data) => {
-          console.log(data);
           if (data.token) {
-            formik.resetForm();
-            dispatch(toggleModel(false));
+            console.log(data);
+            dispatch(toggleSnack(true));
+            dispatch(setResMessage(`${data.name} welcome to Dev Team`));
+            dispatch(addUser({name: data.name, email: data.email, _id: data._id}));
+            setCookie("user", data.token);
+            setTimeout(() => {
+              formik.resetForm();
+              dispatch(toggleModel(false));
+            }, 2000);
+          }
+          if (data.message) {
+            dispatch(toggleSnack(true));
+            dispatch(setErrorState(false));
+            dispatch(setResMessage(data.message));
+            setTimeout(() => {
+              dispatch(setErrorState(true));
+            }, 1500);
           }
         });
       }

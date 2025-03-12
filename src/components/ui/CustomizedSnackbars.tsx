@@ -5,9 +5,10 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { toggleSnack } from "../../store/slices/toggleSlice";
 
 export default function CustomizedSnackbars() {
-    const snack = useAppSelector(state => state.toggle.snack)
-    const dispatch = useAppDispatch()
-    console.log(snack)
+  const snack = useAppSelector((state) => state.toggle.snack);
+  const resMessage = useAppSelector((state) => state.apiResponse.resMessage);
+  const error = useAppSelector((state) => state.apiResponse.error);
+  const dispatch = useAppDispatch();
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -18,19 +19,19 @@ export default function CustomizedSnackbars() {
     }
 
     // setOpen(false);
-    dispatch(toggleSnack(false))
+    dispatch(toggleSnack(false));
   };
 
   return (
     <div>
-      <Snackbar open={snack} autoHideDuration={2000} onClose={handleClose}>
+      <Snackbar open={snack} autoHideDuration={1500} onClose={handleClose}>
         <Alert
           onClose={handleClose}
-          severity="success"
+          severity={error ? "success" : "error"}
           variant="filled"
           sx={{ width: "100%" }}
         >
-          This is a success Alert inside a Snackbar!
+          {resMessage}
         </Alert>
       </Snackbar>
     </div>
