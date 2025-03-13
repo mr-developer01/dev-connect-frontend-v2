@@ -1,7 +1,7 @@
 import { Button, Paper, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { getValidationSchema } from "./YupValidation";
+import { getValidationSchema } from "../../validations/YupValidation";
 import registerUser from "../../utils/registerUser";
 import { useAppDispatch } from "../../store/hooks";
 import { toggleModel, toggleSnack } from "../../store/slices/toggleSlice";
@@ -10,10 +10,13 @@ import {
   setResMessage,
 } from "../../store/slices/apiResponseSlice";
 import { addUser } from "../../store/slices/userSlice";
-import { useCookies } from "react-cookie";
 
-const AuthForm = () => {
-  const [cookies, setCookie] = useCookies(["user"]);
+type TAuth = {
+  setCookie: (a: string, b: string) => void
+}
+
+const AuthForm = ({setCookie}: TAuth) => {
+  
   const [isLogin, setIslogin] = useState(true);
   const dispatch = useAppDispatch();
   const formik = useFormik({

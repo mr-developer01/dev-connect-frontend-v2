@@ -5,6 +5,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { toggleModel } from "../../store/slices/toggleSlice";
 import CustomizedSnackbars from "./CustomizedSnackbars";
+import { useCookies } from "react-cookie";
 
 const style = {
   position: "relative",
@@ -17,6 +18,7 @@ const style = {
 };
 
 export default function BasicModal() {
+  const [cookies, setCookie] = useCookies(["user"]);
   const dispatch = useAppDispatch();
   const check = useAppSelector((state) => state.toggle.modal);
   const handleClose = () => {
@@ -41,7 +43,7 @@ export default function BasicModal() {
             onClick={() => dispatch(toggleModel(false))}
           />
           <CustomizedSnackbars />
-          <AuthForm />
+          <AuthForm cookies={cookies} setCookie={setCookie} />
         </Box>
       </Modal>
     </Box>
