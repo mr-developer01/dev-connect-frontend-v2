@@ -22,11 +22,30 @@ const UserProfile = () => {
         },
       }).then(async (data) => {
         const jsonData = await data.json();
-        setUserData(jsonData);
+        setTimeout(() => {
+          setUserData(jsonData);
+        }, 5000)
         console.log(jsonData);
       });
     }
   }, [cookies.user, dispatch]);
+
+  if(Object.keys(userData).length === 0){
+    return (
+      <Box sx={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", bgcolor: 'black' }}>
+        <Box
+      sx={{
+        width: "100px",
+        height: "100px",
+        backgroundImage: "url(loader2.gif)",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    />
+      </Box>
+    )
+  }
+
   return (
     <Stack direction={"row"} sx={{ height: "90.6vh" }}>
       <Stack
@@ -96,16 +115,15 @@ const UserProfile = () => {
           }}
         />
         <Stack>
-          <Typography variant="h5">{userData.name}</Typography>
+          <Typography variant="h5">{userData?.name}</Typography>
           <Typography variant="h5" color="#4B21FF">
             DEB
           </Typography>
           <Typography variant="body2">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+            {userData?.skills.join(", ")}
           </Typography>
           <Typography variant="body2" mt={4}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
-            deleniti quisquam aspernatur architecto animi. Necessitatibus!
+            {userData?.bio}
           </Typography>
           <Stack direction={"row"} sx={{ mt: 4, gap: 6 }}>
             <Button
