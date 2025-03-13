@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { toggleModel } from "../../store/slices/toggleSlice";
 import BasicModal from "./BasicModal";
 import { Link } from "react-router";
-import { Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import AnchorTemporaryDrawer from "./AnchorTemporaryDrawer";
 import { useToggleDrawer } from "./utils/useToggleDrawer";
 
@@ -20,45 +20,49 @@ export default function ButtonAppBar() {
       <BasicModal />
       <AnchorTemporaryDrawer />
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Link to="/">Commit.dev</Link>
-            </Typography>
-            {user ? (
-              <Stack
-                direction="row"
-                sx={{
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  width: "30rem",
-                }}
-              >
+        <AppBar position="static" sx={{bgcolor: '#B06249'}}>
+          <Container>
+            <Toolbar disableGutters>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Link to="/">Commit.dev</Link>
+              </Typography>
+              {user ? (
                 <Stack
                   direction="row"
-                  sx={{ alignItems: "center", flex: 4, gap: 4 }}
+                  sx={{
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "30rem",
+                  }}
                 >
-                  <Link to="/posts">Posts</Link>
-                  <Link to="/connections">Connections</Link>
-                  <Link to="/posts">Posts</Link>
+                  <Stack
+                    direction="row"
+                    sx={{ alignItems: "center", flex: 4, gap: 4 }}
+                  >
+                    <Link to="/posts">Posts</Link>
+                    <Link to="/connections">Connections</Link>
+                    <Link to="/posts">Posts</Link>
+                  </Stack>
+                  <Typography
+                    variant="body1"
+                    sx={{ flex: 1, textAlign: "end", cursor: "pointer" }}
+                    onClick={() => dispatchAction("right", true)}
+                    noWrap
+                  >
+                    Hello, {user.name}
+                  </Typography>
                 </Stack>
-                <Typography
-                  variant="h5"
-                  sx={{ flex: 1, textAlign: "end", cursor: "pointer" }}
-                  onClick={() => dispatchAction("right", true)}
+              ) : (
+                <Button
+                  color="inherit"
+                  onClick={() => dispatch(toggleModel(true))}
+                  sx={{border: '1px solid #4B21FF', px: 4}}
                 >
-                  {user.name}
-                </Typography>
-              </Stack>
-            ) : (
-              <Button
-                color="inherit"
-                onClick={() => dispatch(toggleModel(true))}
-              >
-                Login
-              </Button>
-            )}
-          </Toolbar>
+                  Login
+                </Button>
+              )}
+            </Toolbar>
+          </Container>
         </AppBar>
       </Box>
     </>

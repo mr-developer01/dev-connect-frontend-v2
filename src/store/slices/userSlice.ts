@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../appStore";
-
-type TuserData = {
-    _id: string
-    name: string
-    email: string
-}
-
-export interface userStateState {
-  user: TuserData | null
-}
+import { TuserData, userStateState } from "../../@types/storeTypes/sliceTypes";
 
 const initialState: userStateState = {
   user: null

@@ -1,14 +1,26 @@
 import { Route, Routes } from "react-router";
 import LandingPage from "../pages/LandingPage";
 import ButtonAppBar from "../ui/ButtonAppBar";
+import UserRoute from "./protectedRoutes/UserRoute";
+import UserProfile from "../core/UserProfile";
+import Connects from "../core/Connects";
+import UpdateUserProfile from "../core/UpdateUserProfile";
+import { Container } from "@mui/material";
 
 const AppRoute = () => {
   return (
     <>
       <ButtonAppBar />
-      <Routes>
-        <Route index element={<LandingPage />} />
-      </Routes>
+      <Container>
+        <Routes>
+          <Route index element={<LandingPage />} />
+          <Route element={<UserRoute />}>
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/connects" element={<Connects />} />
+            <Route path="/user/profile" element={<UpdateUserProfile />} />
+          </Route>
+        </Routes>
+      </Container>
     </>
   );
 };

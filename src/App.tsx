@@ -1,20 +1,40 @@
 import { CssBaseline } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { useAppDispatch } from "./store/hooks";
 import { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { addUser, selectUser } from "./store/slices/userSlice";
+import { addUser } from "./store/slices/userSlice";
 import securedFetch from "./utils/securedFetch";
 import AppRoute from "./components/routes/AppRoute";
 import { BrowserRouter } from "react-router";
+import { API_KEYS } from "./api/keys";
 
 const App = () => {
   const [cookies] = useCookies(["user"]);
   const dispatch = useAppDispatch();
-  const something = useAppSelector(selectUser)
-  console.log(something, "Something selected")
+
+  console.log(`${import.meta.env.VITE_HOST_URL}${API_KEYS.PROFILE}`);
 
   useEffect(() => {
     if (cookies?.user) {
+      // const userData = securedFetch2(
+      //   "https://dev-connect-service.onrender.com/api/users/profile",
+      //   {
+      //     method: "GET",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //       Authorization: `Bearer ${cookies?.user}`,
+      //     },
+      //   }
+      // );
+
+      // dispatch(
+      //   addUser({
+      //     name: userData.name,
+      //     email: userData.email,
+      //     _id: userData._id,
+      //   })
+      // );
+
       securedFetch(
         "https://dev-connect-service.onrender.com/api/users/profile",
         {

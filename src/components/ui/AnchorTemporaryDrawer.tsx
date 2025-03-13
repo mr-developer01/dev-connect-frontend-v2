@@ -29,9 +29,9 @@ export default function AnchorTemporaryDrawer() {
       onKeyDown={() => dispatchAction(anchor, false)}
     >
       <List>
-        {["Profile", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Profile", "Connects", "Requests", "Update"].map((text, index) => (
           <ListItem key={text} disablePadding>
-              <ListItemButton component={Link} to={`/${text}`}>
+              <ListItemButton component={Link} to={`/${text.toLowerCase()}`}>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                 </ListItemIcon>
@@ -55,8 +55,6 @@ export default function AnchorTemporaryDrawer() {
       </List>
     </Box>
   );
-
-  console.log(state);
 
   return (
     <div>

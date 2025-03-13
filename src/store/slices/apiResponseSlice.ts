@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../appStore";
-
-export interface apiResponseState {
-  resMessage: string;
-  error: boolean;
-}
+import { apiResponseState } from "../../@types/storeTypes/sliceTypes";
 
 const initialState: apiResponseState = {
   resMessage: "I am success state!!",

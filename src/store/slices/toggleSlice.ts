@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../appStore";
-
-type TAnchor = {
-  right: boolean
-}
-
-export interface toggleState {
-  modal: boolean;
-  snack: boolean
-  anchor: TAnchor
-}
+import { TAnchor, toggleState } from "../../@types/storeTypes/sliceTypes";
 
 const initialState: toggleState = {
   modal: false,

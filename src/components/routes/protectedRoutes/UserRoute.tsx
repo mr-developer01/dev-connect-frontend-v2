@@ -1,9 +1,21 @@
-import React from 'react'
+import { useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { Outlet, useNavigate } from "react-router";
 
 const UserRoute = () => {
-  return (
-    <div>UserRoute</div>
-  )
-}
+  const [cookies] = useCookies(["user"]);
+  const navigate = useNavigate();
 
-export default UserRoute
+  useEffect(() => {
+    if (!cookies.user) {
+      navigate("/");
+    }
+  }, [cookies.user, navigate]);
+  return (
+    <>
+      <Outlet />
+    </>
+  );
+};
+
+export default UserRoute;
