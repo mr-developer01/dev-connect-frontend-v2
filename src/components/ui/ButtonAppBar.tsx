@@ -8,13 +8,17 @@ import { toggleModel } from "../../store/slices/toggleSlice";
 import BasicModal from "./BasicModal";
 import { Link } from "react-router";
 import { Stack } from "@mui/material";
+import AnchorTemporaryDrawer from "./AnchorTemporaryDrawer";
+import { useToggleDrawer } from "./utils/useToggleDrawer";
 
 export default function ButtonAppBar() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
+  const { dispatchAction } = useToggleDrawer();
   return (
     <>
       <BasicModal />
+      <AnchorTemporaryDrawer />
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -38,7 +42,11 @@ export default function ButtonAppBar() {
                   <Link to="/connections">Connections</Link>
                   <Link to="/posts">Posts</Link>
                 </Stack>
-                <Typography variant="h5" sx={{ flex: 1, textAlign: "end", cursor: 'pointer' }}>
+                <Typography
+                  variant="h5"
+                  sx={{ flex: 1, textAlign: "end", cursor: "pointer" }}
+                  onClick={() => dispatchAction("right", true)}
+                >
                   {user.name}
                 </Typography>
               </Stack>
