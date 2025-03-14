@@ -8,6 +8,7 @@ import { API_KEYS } from "../../api/keys";
 import { Link } from "react-router";
 
 const UserProfile = () => {
+  const [bio, setBio] = useState(true)
   const [userData, setUserData] = useState({});
   const [cookies] = useCookies(["user"]);
   const dispatch = useAppDispatch();
@@ -24,26 +25,38 @@ const UserProfile = () => {
         const jsonData = await data.json();
         setTimeout(() => {
           setUserData(jsonData);
-        }, 5000)
+        }, 5000);
         console.log(jsonData);
       });
     }
   }, [cookies.user, dispatch]);
 
-  if(Object.keys(userData).length === 0){
+  if (Object.keys(userData).length === 0) {
     return (
-      <Box sx={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", bgcolor: 'black' }}>
+      <Box
+        sx={{
+          height: "100vh",
+          width: '100%',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          bgcolor: "black",
+          position: 'absolute',
+          top: '0%',
+          left: '0%'
+        }}
+      >
         <Box
-      sx={{
-        width: "100px",
-        height: "100px",
-        backgroundImage: "url(loader2.gif)",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-      }}
-    />
+          sx={{
+            width: "100px",
+            height: "100px",
+            backgroundImage: "url(loader2.gif)",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
       </Box>
-    )
+    );
   }
 
   return (
@@ -119,11 +132,9 @@ const UserProfile = () => {
           <Typography variant="h5" color="#4B21FF">
             DEB
           </Typography>
-          <Typography variant="body2">
-            {userData?.skills.join(", ")}
-          </Typography>
-          <Typography variant="body2" mt={4}>
-            {userData?.bio}
+          <Typography variant="body2">{userData?.skills.join(", ")}</Typography>
+          <Typography variant="body2" mt={4} sx={{cursor: 'pointer'}} onClick={() => setBio(!bio)}>
+            {bio ? `${userData?.bio.split(/\s+/).slice(0, 15).join(' ')}...` : userData?.bio}
           </Typography>
           <Stack direction={"row"} sx={{ mt: 4, gap: 6 }}>
             <Button

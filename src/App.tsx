@@ -36,7 +36,7 @@ const App = () => {
       // );
 
       securedFetch(
-        "https://dev-connect-service.onrender.com/api/users/profile",
+        `${import.meta.env.VITE_HOST_URL}${API_KEYS.USER}`,
         {
           method: "GET",
           headers: {

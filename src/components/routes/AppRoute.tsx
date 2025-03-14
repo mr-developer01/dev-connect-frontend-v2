@@ -4,8 +4,8 @@ import ButtonAppBar from "../ui/ButtonAppBar";
 import UserRoute from "./protectedRoutes/UserRoute";
 import UserProfile from "../core/UserProfile";
 import Connects from "../core/Connects";
-import UpdateUserProfile from "../core/UpdateUserProfile";
 import { Container } from "@mui/material";
+import UpdateUserProfile from "../pages/UpdateUserProfile";
 
 const AppRoute = () => {
   return (
