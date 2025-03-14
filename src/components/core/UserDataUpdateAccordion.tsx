@@ -8,6 +8,9 @@ import { Box, Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { useCookies } from "react-cookie";
 import { userProfileInitialValues, userSubmitedData } from "../../constants/formik/userFormData";
+import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../store/hooks";
+import { addUser } from "../../store/slices/userSlice";
 
 
 type TSkills = string;
@@ -40,6 +43,8 @@ type TFormData = {
 export default function UserDataUpdateAccordion() {
   const [expanded, setExpanded] = React.useState<string | false>(false);
   const [cookies] = useCookies();
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -51,8 +56,8 @@ export default function UserDataUpdateAccordion() {
     // validationSchema: getValidationSchemaForProfileUpdate(),
     onSubmit: (values) => {
       console.log(values)
-      const {formData}: {formData: TFormData} = userSubmitedData(values);
-
+      const formData: TFormData = userSubmitedData(values);
+      console.log(formData, "Update Clicked")
       async function updateUserDetail() {
         const response = await fetch(
           "https://dev-connect-service.onrender.com/api/users/profile",
@@ -67,9 +72,10 @@ export default function UserDataUpdateAccordion() {
         );
         const jsonData = await response.json();
         console.log(jsonData);
+        dispatch(addUser(jsonData))
+        navigate('/profile')
       }
       updateUserDetail();
-      // console.log(formData);
     },
   });
 

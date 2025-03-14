@@ -78,5 +78,7 @@ export const userSubmitedData = (values: TValues) => {
     profilePicture: values.profilePicture,
   };
 
+  console.log(formData, "comming from hook")
+
   return formData;
 };

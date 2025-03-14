@@ -41,7 +41,7 @@ export default function ButtonAppBar() {
                   >
                     <Link to="/posts">Posts</Link>
                     <Link to="/connections">Connections</Link>
-                    <Link to="/posts">Posts</Link>
+                    <Link to="/create-post">Create Post</Link>
                   </Stack>
                   <Typography
                     variant="body1"
