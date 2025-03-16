@@ -20,10 +20,10 @@ export default function ButtonAppBar() {
       <BasicModal />
       <AnchorTemporaryDrawer />
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{bgcolor: '#B06249'}}>
-          <Container>
+        <AppBar position="static" sx={{bgcolor: '#fff', color: '#000'}}>
+          <Container sx={{maxWidth: {md: "98%"}}}>
             <Toolbar disableGutters>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" sx={{ flexGrow: 1 }}>
                 <Link to="/">Commit.dev</Link>
               </Typography>
               {user ? (

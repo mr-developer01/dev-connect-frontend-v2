@@ -12,7 +12,7 @@ const AppRoute = () => {
   return (
     <>
       <ButtonAppBar />
-      <Container>
+      <Container sx={{maxWidth: {md: "98%"}}}>
         <Routes>
           <Route index element={<LandingPage />} />
           <Route element={<UserRoute />}>

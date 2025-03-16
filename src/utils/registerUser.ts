@@ -1,3 +1,5 @@
+import { API_KEYS } from "../api/keys";
+
 type TUserData = {
     name: string;
     email: string;
@@ -7,7 +9,8 @@ type TUserData = {
   async function registerUser(userData: TUserData) {
     if (userData.name) {
       const response = await fetch(
-        "https://dev-connect-service.onrender.com/api/auth/register",
+        // "https://dev-connect-service.onrender.com/api/auth/register",
+        `${import.meta.env.VITE_HOST_URL}${API_KEYS.REGISTER}`,
         {
           method: "POST",
           headers: {
