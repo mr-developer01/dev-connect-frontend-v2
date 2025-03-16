@@ -6,13 +6,14 @@ import Button from "@mui/material/Button";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { toggleModel } from "../../store/slices/toggleSlice";
 import BasicModal from "./BasicModal";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { Container, Stack } from "@mui/material";
 import AnchorTemporaryDrawer from "./AnchorTemporaryDrawer";
 import { useToggleDrawer } from "./utils/useToggleDrawer";
 
 export default function ButtonAppBar() {
   const dispatch = useAppDispatch();
+  let { pathname } = useLocation();
   const user = useAppSelector((state) => state.user.user);
   const { dispatchAction } = useToggleDrawer();
   return (
@@ -20,8 +21,8 @@ export default function ButtonAppBar() {
       <BasicModal />
       <AnchorTemporaryDrawer />
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{bgcolor: '#fff', color: '#000'}}>
-          <Container sx={{maxWidth: {md: "98%"}}}>
+        <AppBar position="static" sx={{ bgcolor: "#fff", color: "#000" }}>
+          <Container sx={{ maxWidth: { md: "98%" } }}>
             <Toolbar disableGutters>
               <Typography variant="h6" sx={{ flexGrow: 1 }}>
                 <Link to="/">Commit.dev</Link>
@@ -39,9 +40,27 @@ export default function ButtonAppBar() {
                     direction="row"
                     sx={{ alignItems: "center", flex: 4, gap: 4 }}
                   >
-                    <Link to="/posts">Posts</Link>
-                    <Link to="/connections">Connections</Link>
-                    <Link to="/create-post">Create Post</Link>
+                    <Typography
+                      color={pathname === "/posts" ? "red" : "black"}
+                      component={Link}
+                      to="/posts"
+                    >
+                      Posts
+                    </Typography>
+                    <Typography
+                      color={pathname === "/connections" ? "red" : "black"}
+                      component={Link}
+                      to="/connections"
+                    >
+                      Connections
+                    </Typography>
+                    <Typography
+                      color={pathname === "/create-post" ? "red" : "black"}
+                      component={Link}
+                      to="/create-post"
+                    >
+                      Create Post
+                    </Typography>
                   </Stack>
                   <Typography
                     variant="body1"
@@ -56,7 +75,7 @@ export default function ButtonAppBar() {
                 <Button
                   color="inherit"
                   onClick={() => dispatch(toggleModel(true))}
-                  sx={{border: '1px solid #4B21FF', px: 4}}
+                  sx={{ border: "1px solid #4B21FF", px: 4 }}
                 >
                   Login
                 </Button>

@@ -1,15 +1,8 @@
-import { Button, Grid2, Stack, Typography } from "@mui/material";
-import Featured from "../core/Featured";
+import { Grid2, Stack, Typography } from "@mui/material";
 import Blog from "../core/Blog";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "../../store/hooks";
-import { toggleModel } from "../../store/slices/toggleSlice";
+import Featured from "../core/Featured";
 
-const LandingPage = () => {
-  const [cookies] = useCookies(['user'])
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+const Posts = () => {
   return (
     <>
       <Featured />
@@ -52,23 +45,9 @@ const LandingPage = () => {
             <Blog />
           </Grid2>
         </Grid2>
-        <Stack sx={{ mt: 4 }} alignItems={"center"}>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              if(cookies.user){
-                navigate('/posts')
-              }else{
-                dispatch(toggleModel(true))
-              }
-            }}
-          >
-            Explore More
-          </Button>
-        </Stack>
       </Stack>
     </>
   );
 };
 
-export default LandingPage;
+export default Posts;

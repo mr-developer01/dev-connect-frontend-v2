@@ -7,6 +7,7 @@ import Connects from "../core/Connects";
 import { Container } from "@mui/material";
 import UpdateUserProfile from "../pages/UpdateUserProfile";
 import CreatePostPage from "../pages/CreatePostPage";
+import Posts from "../pages/Posts";
 
 const AppRoute = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoute = () => {
         <Routes>
           <Route index element={<LandingPage />} />
           <Route element={<UserRoute />}>
+            <Route path="/posts" element={<Posts />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/connects" element={<Connects />} />
             <Route path="/user/profile" element={<UpdateUserProfile />} />

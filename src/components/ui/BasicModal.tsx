@@ -43,7 +43,7 @@ export default function BasicModal() {
             onClick={() => dispatch(toggleModel(false))}
           />
           <CustomizedSnackbars />
-          <AuthForm cookies={cookies} setCookie={setCookie} />
+          <AuthForm setCookie={setCookie} />
         </Box>
       </Modal>
     </Box>

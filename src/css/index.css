@@ -3,6 +3,11 @@ a{
   color: black;
 }
 
+a.active {
+  color: red;
+}
+
+
 .auth-form{
   display: flex;
   flex-direction: column;

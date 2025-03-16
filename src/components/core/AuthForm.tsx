@@ -10,15 +10,16 @@ import {
   setResMessage,
 } from "../../store/slices/apiResponseSlice";
 import { addUser } from "../../store/slices/userSlice";
+import { useNavigate } from "react-router";
 
 type TAuth = {
   setCookie: (a: string, b: string) => void
 }
 
 const AuthForm = ({setCookie}: TAuth) => {
-  
   const [isLogin, setIslogin] = useState(true);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -62,6 +63,7 @@ const AuthForm = ({setCookie}: TAuth) => {
             setTimeout(() => {
               formik.resetForm();
               dispatch(toggleModel(false));
+              navigate('/posts')
             }, 2000);
           }
           if (data.message) {
