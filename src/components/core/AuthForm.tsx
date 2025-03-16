@@ -11,9 +11,10 @@ import {
 } from "../../store/slices/apiResponseSlice";
 import { addUser } from "../../store/slices/userSlice";
 import { useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
 
 type TAuth = {
-  setCookie: (a: string, b: string) => void
+  setCookie: ReturnType<typeof useCookies>[1];
 }
 
 const AuthForm = ({setCookie}: TAuth) => {
