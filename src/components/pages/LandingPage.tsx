@@ -5,11 +5,40 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "../../store/hooks";
 import { toggleModel } from "../../store/slices/toggleSlice";
+import { API_KEYS } from "../../api/keys";
+import securedFetch from "../../utils/securedFetch";
+import { useEffect } from "react";
+import { addUser } from "../../store/slices/userSlice";
 
 const LandingPage = () => {
-  const [cookies] = useCookies(['user'])
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const [cookies] = useCookies(["user"]);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  // const navigate = useNavigate()
+
+  // console.log(`${import.meta.env.VITE_HOST_URL}${API_KEYS.PROFILE}`);
+
+  useEffect(() => {
+    if (cookies?.user) {
+      securedFetch(`${import.meta.env.VITE_HOST_URL}${API_KEYS.USER}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies?.user}`,
+        },
+      }).then(async (data) => {
+        const jsonData = await data.json();
+        dispatch(
+          addUser({
+            name: jsonData.name,
+            email: jsonData.email,
+            _id: jsonData._id,
+          })
+        );
+        navigate('/posts')
+      });
+    }
+  }, [cookies.user, dispatch, navigate]);
   return (
     <>
       <Featured />
@@ -56,10 +85,10 @@ const LandingPage = () => {
           <Button
             variant="outlined"
             onClick={() => {
-              if(cookies.user){
-                navigate('/posts')
-              }else{
-                dispatch(toggleModel(true))
+              if (cookies.user) {
+                navigate("/posts");
+              } else {
+                dispatch(toggleModel(true));
               }
             }}
           >

@@ -9,15 +9,20 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectAnchor } from "../../store/slices/toggleSlice";
 import { useToggleDrawer } from "./utils/useToggleDrawer";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
+import { addUser } from "../../store/slices/userSlice";
 
 type Anchor = "right";
 
 export default function AnchorTemporaryDrawer() {
   const state = useAppSelector(selectAnchor);
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { dispatchAction } = useToggleDrawer();
 
@@ -31,20 +36,36 @@ export default function AnchorTemporaryDrawer() {
       <List>
         {["Profile", "Connects", "Requests", "Update"].map((text, index) => (
           <ListItem key={text} disablePadding>
-              <ListItemButton component={Link} to={`/${text.toLowerCase()}`}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
+            <ListItemButton
+              component={Link}
+              to={`/${
+                text.toLowerCase() === "update"
+                  ? "user/profile"
+                  : text.toLowerCase()
+              }`}
+            >
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {["Logout"].map((text, index) => (
           <ListItem key={text} disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                removeCookie("user");
+                dispatch(addUser(null));
+                navigate("/");
+                setTimeout(() => {
+                  window.location.reload();
+                }, 100);
+              }}
+            >
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>

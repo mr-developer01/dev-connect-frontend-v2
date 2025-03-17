@@ -18,9 +18,9 @@ const Featured = () => {
         overflow: "hidden",
       }}
     >
-      <Box sx={{ bgcolor: "#00000034", px: 8, py: 6 }}>
+      <Box sx={{ px: 8, }}>
         <Stack direction={"row"} spacing={8}>
-          <Stack sx={{width: '55%', gap: 2}}>
+          <Stack sx={{width: '78%', gap: 2}}>
             <Typography variant="h5">Featured</Typography>
             <Box>
               <Typography variant="h3">Breaking Into Product Design:</Typography>

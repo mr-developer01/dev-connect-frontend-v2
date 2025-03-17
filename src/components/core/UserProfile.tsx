@@ -26,7 +26,7 @@ const UserProfile = () => {
         setTimeout(() => {
           setUserData(jsonData);
         }, 5000);
-        console.log(jsonData);
+        // console.log(jsonData);
       });
     }
   }, [cookies.user, dispatch]);

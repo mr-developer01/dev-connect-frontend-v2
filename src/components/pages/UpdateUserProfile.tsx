@@ -1,9 +1,11 @@
-import UserDataUpdateAccordion from "../core/UserDataUpdateAccordion";
+import UpdateUserData from "../core/UpdateUserData";
+// import UserDataUpdateAccordion from "../core/UserDataUpdateAccordion";
 
 const UpdateUserProfile = () => {
   return (
     <>
-      <UserDataUpdateAccordion />
+      {/* <UserDataUpdateAccordion /> */}
+      <UpdateUserData />
     </>
   );
 };
