@@ -15,8 +15,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useCookies } from "react-cookie";
-// import { useAppDispatch } from "../../store/hooks";
-// import { addUser } from "../../store/slices/userSlice";
+import { useAppDispatch } from "../../store/hooks";
+import { addUser } from "../../store/slices/userSlice";
 
 // Type Definitions
 interface Experience {
@@ -47,7 +47,7 @@ interface FormData {
 export default function UpdateUserData() {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [cookies] = useCookies();
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   const formik = useFormik<FormData>({
     initialValues: {
@@ -59,50 +59,35 @@ export default function UpdateUserData() {
       profilePicture: null,
     },
     onSubmit: async (values) => {
-      console.log("Form values before sending:", values);
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${cookies.user}`);
 
-      try {
-        const formData = new FormData();
-        formData.append("name", values.name);
-        formData.append("bio", values.bio);
+      const formdata = new FormData();
+      formdata.append(
+        "profilePicture",
+        values.profilePicture as File,
+        values.profilePicture?.name
+      );
+      formdata.append("name", "Prashansa");
+      formdata.append("bio", "Frontend Developer");
 
-        // Convert skills string into JSON array format
-        formData.append(
-          "skills",
-          JSON.stringify(values.skills.split(",").map((skill) => skill.trim()))
-        );
+      const requestOptions: any = {
+        method: "PUT",
+        headers: myHeaders,
+        body: formdata,
+        redirect: "follow",
+      };
 
-        formData.append("socialLinks", JSON.stringify(values.socialLinks));
-        formData.append("experience", JSON.stringify(values.experience));
-
-        // Append file if selected
-        if (values.profilePicture instanceof File) {
-          formData.append("profilePicture", values.profilePicture);
-        }
-
-        console.log(formData, "FormData")
-
-        const response = await fetch(
-          "https://dev-connect-service.onrender.com/api/users/profile",
-          {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${cookies.user}`,
-            },
-            body: formData,
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const jsonData = await response.json();
-        console.log("Server Response:", jsonData);
-        // dispatch(addUser(jsonData));
-      } catch (error) {
-        console.error("Error updating profile:", error);
-      }
+      fetch(
+        "https://dev-connect-service.onrender.com/api/users/profile",
+        requestOptions
+      )
+        .then((response) => response.text())
+        .then((result) => {
+          console.log(result)
+          dispatch(addUser(result))
+        })
+        .catch((error) => console.error(error));
     },
   });
 
