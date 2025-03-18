@@ -35,7 +35,6 @@ const AuthForm = ({setCookie}: TAuth) => {
           email: values.email,
           password: values.password,
         }).then((data) => {
-          console.log(data);
           if (data.token) {
             dispatch(toggleSnack(true));
             dispatch(setResMessage(`${data.name} welcome to Dev Team`));
@@ -56,7 +55,6 @@ const AuthForm = ({setCookie}: TAuth) => {
           password: values.password,
         }).then((data) => {
           if (data.token) {
-            console.log(data);
             dispatch(toggleSnack(true));
             dispatch(setResMessage(`${data.name} welcome to Dev Team`));
             dispatch(addUser({name: data.name, email: data.email, _id: data._id}));

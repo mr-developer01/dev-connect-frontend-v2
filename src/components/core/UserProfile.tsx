@@ -26,7 +26,6 @@ const UserProfile = () => {
         setTimeout(() => {
           setUserData(jsonData);
         }, 5000);
-        // console.log(jsonData);
       });
     }
   }, [cookies.user, dispatch]);
@@ -134,7 +133,7 @@ const UserProfile = () => {
           </Typography>
           <Typography variant="body2">{userData?.skills.join(", ")}</Typography>
           <Typography variant="body2" mt={4} sx={{cursor: 'pointer'}} onClick={() => setBio(!bio)}>
-            {bio ? `${userData?.bio.split(/\s+/).slice(0, 15).join(' ')}...` : userData?.bio}
+            {!bio ? `${userData?.bio.split(/\s+/).slice(0, 15).join(' ')}...` : userData?.bio}
           </Typography>
           <Stack direction={"row"} sx={{ mt: 4, gap: 6 }}>
             <Button

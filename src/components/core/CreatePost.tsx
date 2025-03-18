@@ -3,10 +3,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router";
 
 const CreatePost = () => {
   const [images, setImages] = useState<File[]>([]);
-  const [cookies] = useCookies()
+  const [cookies] = useCookies();
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -23,23 +25,36 @@ const CreatePost = () => {
         tags: values.tags,
         images, // Array of images
       };
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${cookies.user}`);
+      const formdata = new FormData();
+
+      images.forEach((image) => {
+        formdata.append("images", image);
+      });
+
+      formdata.append("content", values.content);
+      formdata.append("tags", values.tags);
+
+      const requestOptions: any = {
+        method: "POST",
+        headers: myHeaders,
+        body: formdata,
+        redirect: "follow",
+      };
+
       async function createPost() {
         const response = await fetch(
           "https://dev-connect-service.onrender.com/api/posts",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${cookies.user}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(postData),
-          }
+          requestOptions
         );
-        const jsonData = await response.json();
-        console.log(jsonData);
+        console.log(response)
+        await response.json();
+        if(response.ok){
+          navigate('/posts')
+        }
       }
       createPost();
-      console.log("Post Data:", postData);
     },
   });
 

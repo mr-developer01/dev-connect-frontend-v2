@@ -55,9 +55,7 @@ export default function UserDataUpdateAccordion() {
     initialValues: userProfileInitialValues,
     // validationSchema: getValidationSchemaForProfileUpdate(),
     onSubmit: (values) => {
-      console.log(values)
       const formData: TFormData = userSubmitedData(values);
-      console.log(formData, "Update Clicked")
       async function updateUserDetail() {
         const response = await fetch(
           "https://dev-connect-service.onrender.com/api/users/profile",
@@ -71,7 +69,6 @@ export default function UserDataUpdateAccordion() {
           }
         );
         const jsonData = await response.json();
-        console.log(jsonData);
         dispatch(addUser(jsonData))
         navigate('/profile')
       }

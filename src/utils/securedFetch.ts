@@ -28,7 +28,6 @@ export default securedFetch;
 //     return jsonData;
 //   }
 //   apiFetch().then((data) => {
-//     console.log(data);
 //     return userData = data;
 //   });
 // };

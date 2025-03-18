@@ -9,37 +9,29 @@ import { BrowserRouter } from "react-router";
 import { API_KEYS } from "./api/keys";
 
 const App = () => {
-  // const [cookies] = useCookies(["user"]);
-  // const dispatch = useAppDispatch();
-  // // const navigate = useNavigate()
+  const [cookies] = useCookies(["user"]);
+  const dispatch = useAppDispatch();
 
-  // console.log(`${import.meta.env.VITE_HOST_URL}${API_KEYS.PROFILE}`);
-
-  // useEffect(() => {
-  //   if (cookies?.user) {
-
-  //     securedFetch(
-  //       `${import.meta.env.VITE_HOST_URL}${API_KEYS.USER}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${cookies?.user}`,
-  //         },
-  //       }
-  //     ).then(async (data) => {
-  //       const jsonData = await data.json();
-  //       dispatch(
-  //         addUser({
-  //           name: jsonData.name,
-  //           email: jsonData.email,
-  //           _id: jsonData._id,
-  //         })
-  //       );
-  //       // navigate('/posts')
-  //     });
-  //   }
-  // }, [cookies.user, dispatch]);
+  useEffect(() => {
+    if (cookies?.user) {
+      securedFetch(`${import.meta.env.VITE_HOST_URL}${API_KEYS.USER}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies?.user}`,
+        },
+      }).then(async (data) => {
+        const jsonData = await data.json();
+        dispatch(
+          addUser({
+            name: jsonData.name,
+            email: jsonData.email,
+            _id: jsonData._id,
+          })
+        );
+      });
+    }
+  }, [cookies.user, dispatch]);
 
   return (
     <BrowserRouter>

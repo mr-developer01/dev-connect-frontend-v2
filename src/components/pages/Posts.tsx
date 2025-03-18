@@ -3,6 +3,7 @@ import Blog from "../core/Blog";
 import Featured from "../core/Featured";
 
 const Posts = () => {
+
   return (
     <>
       <Featured />

@@ -59,6 +59,7 @@ export default function UpdateUserData() {
       profilePicture: null,
     },
     onSubmit: async (values) => {
+      console.log(values)
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${cookies.user}`);
 
@@ -68,8 +69,8 @@ export default function UpdateUserData() {
         values.profilePicture as File,
         values.profilePicture?.name
       );
-      formdata.append("name", "Prashansa");
-      formdata.append("bio", "Frontend Developer");
+      formdata.append("name", values.name);
+      formdata.append("bio", values.bio);
 
       const requestOptions: any = {
         method: "PUT",
@@ -82,10 +83,10 @@ export default function UpdateUserData() {
         "https://dev-connect-service.onrender.com/api/users/profile",
         requestOptions
       )
-        .then((response) => response.text())
+        .then((response) => response)
         .then((result) => {
           console.log(result)
-          dispatch(addUser(result))
+          dispatch(addUser(result.json()))
         })
         .catch((error) => console.error(error));
     },
