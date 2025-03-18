@@ -80,7 +80,7 @@ const UserProfile = () => {
         ></Box>
         <Box
           sx={{
-            width: "400px",
+            width: "700px",
             height: "90%",
             position: "absolute",
             top: "50%",

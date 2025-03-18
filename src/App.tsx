@@ -7,6 +7,8 @@ import securedFetch from "./utils/securedFetch";
 import AppRoute from "./components/routes/AppRoute";
 import { BrowserRouter } from "react-router";
 import { API_KEYS } from "./api/keys";
+import { createSocketConnection } from "./utils/socket";
+import { string } from "yup";
 
 const App = () => {
   const [cookies] = useCookies(["user"]);
@@ -14,6 +16,8 @@ const App = () => {
 
   useEffect(() => {
     if (cookies?.user) {
+      const socket = createSocketConnection()
+      socket.on("new_post", {})
       securedFetch(`${import.meta.env.VITE_HOST_URL}${API_KEYS.USER}`, {
         method: "GET",
         headers: {
