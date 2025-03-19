@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const CreatePost = () => {
   const [images, setImages] = useState<File[]>([]);
   const [cookies] = useCookies();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -20,11 +20,6 @@ const CreatePost = () => {
       tags: Yup.string().required("At least one tag is required"),
     }),
     onSubmit: (values) => {
-      const postData = {
-        content: values.content,
-        tags: values.tags,
-        images, // Array of images
-      };
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${cookies.user}`);
       const formdata = new FormData();
@@ -48,10 +43,9 @@ const CreatePost = () => {
           "https://dev-connect-service.onrender.com/api/posts",
           requestOptions
         );
-        console.log(response)
         await response.json();
-        if(response.ok){
-          navigate('/posts')
+        if (response.ok) {
+          navigate("/posts");
         }
       }
       createPost();

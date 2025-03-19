@@ -1,5 +1,8 @@
 import { io } from "socket.io-client";
 
-export const createSocketConnection = () => {
-    return io(import.meta.env.VITE_HOST_URL)
+export const useCreateSocketConnection = (token: string) => {
+    if(!token) return
+    return io('https://dev-connect-service.onrender.com', {
+        auth: { token },
+    })
 }

@@ -24,7 +24,12 @@ export default function CustomizedSnackbars() {
 
   return (
     <div>
-      <Snackbar open={snack} autoHideDuration={1500} onClose={handleClose}>
+      <Snackbar
+        open={snack}
+        autoHideDuration={1500}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Moves Snackbar to the top center
+      >
         <Alert
           onClose={handleClose}
           severity={error ? "success" : "error"}

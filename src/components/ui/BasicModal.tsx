@@ -4,7 +4,6 @@ import AuthForm from "../core/AuthForm";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { toggleModel } from "../../store/slices/toggleSlice";
-import CustomizedSnackbars from "./CustomizedSnackbars";
 import { useCookies } from "react-cookie";
 
 const style = {
@@ -42,7 +41,6 @@ export default function BasicModal() {
             }}
             onClick={() => dispatch(toggleModel(false))}
           />
-          <CustomizedSnackbars />
           <AuthForm setCookie={setCookie} />
         </Box>
       </Modal>
