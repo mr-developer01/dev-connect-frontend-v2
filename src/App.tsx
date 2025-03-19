@@ -57,13 +57,18 @@ const App = () => {
         dispatch(toggleSnack(true));
       });
 
-      socket.on("new_post", ({ post, user: newUser }) => {
-        if (newUser?._id !== userRef?.current?._id) {
-          console.log(post, newUser);
-          dispatch(setResMessage(`${newUser.name} just added a post`));
+      socket.on("new_post", ({ post, user }) => {
+        if (user?._id !== userRef?.current?._id) {
+          console.log(post, user);
+          dispatch(setResMessage(`${user.name} just added a post`));
           dispatch(toggleSnack(true));
         }
       });
+
+      return () => {
+        socket.close();
+      };
+      
     }
   }, [cookies.user, dispatch, socket]);
 
